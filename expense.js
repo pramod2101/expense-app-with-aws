@@ -36,19 +36,19 @@ window.addEventListener('load', function () {
 document.getElementById('form').addEventListener('submit', function (event) {
     event.preventDefault(); // Prevent default form submission
     
-    const expenseDetails = {
+    const userDetails = {
         name: event.target.name.value,
         email: event.target.email.value,
         password: event.target.password.value
     };
 
-    axios.post('http://localhost:3000/users/signup', expenseDetails)
+    axios.post('http://localhost:3000/signup', userDetails)
         .then(result => {
-            console.log('Expense added:', result.data);
+            console.log('user added:', result.data);
             fetchAndDisplayDetails(); // Fetch and display updated expense details after adding
             document.getElementById('form').reset(); // Reset the form
         })
-        .catch(err => console.error('Error adding expense:', err));
+        .catch(err => console.error('Error adding user:', err));
 });
 
 // Event listener for delete and edit buttons (delegate to parent)

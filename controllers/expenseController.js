@@ -5,22 +5,18 @@ exports.postDetails = (req, res, next) => {
     let data = req.body;
     console.log("Received data:", data); // Log received data for debugging
 
-    if (!data || !data.expenseAmount || !data.chooseDescreption || !data.chooseCategory) {
-        console.error("Invalid data received:", data);
-        return res.status(400).json({ error: 'Invalid data received' });
-    }
 
     Users.create({
-        expenseAmount: data.expenseAmount,
-        chooseDescreption: data.chooseDescreption,
-        chooseCategory: data.chooseCategory
+        name: data.name,
+        email: data.email,
+        password: data.password
     })
     .then(result => {
-        console.log("Expense created:", result); // Log created expense for confirmation
+        console.log("users added:", result); // Log created expense for confirmation
         res.status(201).json(result);
     })
     .catch(err => {
-        console.error("Error creating expense:", err); // Log detailed error for troubleshooting
+        console.error("Error adding user", err); // Log detailed error for troubleshooting
         res.status(500).json({ error: 'Internal error' });
     });
 };

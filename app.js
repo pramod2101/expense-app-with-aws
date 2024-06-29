@@ -11,7 +11,7 @@ const app = express();
 app.use(cors())
 
 app.use(bodyParser.json());
-app.use('/user/signup', expenseRoutes);
+app.use('/', expenseRoutes);
 
 sequelize
   .sync()

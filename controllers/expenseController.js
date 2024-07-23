@@ -29,12 +29,21 @@ const login= (req,res) =>  {
     console.log(password);
     Users.findAll({where : {email}}).then(user =>{
         if(user.length>0){
-            if(user[0].password==password){
-                res.status(200).json({success: true, message:"user logged in successfully"})
-            }
-            else{
-                return res.status(400).json({status:false, message: "password is incorrect"})
-            }
+            bcrypt.compare(password,user[0].password,function(err,response){
+                if(err){
+                    console.log(err);
+                    return res.json({success:false,message:"something went wrong"})
+                }
+                if(response){
+                    console.log(JSON.stringify(user));
+                    const jwttoken=generateAcessToken(user[0].id)
+                    res.status(200).json({success: true, message:"user logged in successfully"})
+                }
+                else{
+                    return res.status(400).json({token:jwttoken,status:false, message: "password is incorrect"})
+                }
+            })
+           
         }
         else{
             return res.status(400).json({status:false, message: "user does not exit"})
